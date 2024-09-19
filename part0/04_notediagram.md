@@ -6,7 +6,7 @@ sequenceDiagram
     participant browser
     participant server
 
-    user->>browser: inputs text in textbox
+    user->>browser: inputs text in text box
     user->>browser: clicks save button
 
 
