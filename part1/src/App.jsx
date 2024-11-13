@@ -32,13 +32,12 @@ const App = () => {
   }
 
 
-  const Content = () => {
-
+  const Content = (props) => {
     return ( 
       <div>
-        <Part name={course.parts[0].name} exercises={course.parts[0].exercises}/>
-        <Part name={course.parts[1].name} exercises={course.parts[1].exercises}/>
-        <Part name={course.parts[2].name} exercises={course.parts[2].exercises}/>
+        <Part name={props.parts[0].name} exercises={props.parts[0].exercises}/>
+        <Part name={props.parts[1].name} exercises={props.parts[1].exercises}/>
+        <Part name={props.parts[2].name} exercises={props.parts[2].exercises}/>
       </div>
     )
   }
