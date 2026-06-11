@@ -10,25 +10,42 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+  const [rating, setRating] = useState({
+    good: 0,
+    neutral: 0,
+    bad: 0
+  })
   // count total clicks
   const [total, setTotal] = useState(0)
   const [average, setAverage] = useState(0)
 
+  // refactor using object spread
+  // to-do: store total in new component
   const handleGood = () => {
-    const updatedGood = good + 1
-    setGood(good + 1)
+    const newRating = {
+      ...rating,
+      good: rating.good + 1
+    }
+    setRating(newRating)
     setTotal(updatedGood + neutral + bad)
   }
 
   const handleNeutral = () => {
-    const updatedNeutral = neutral + 1
-    setNeutral(neutral + 1)
+    const newRating = {
+      ...rating,
+      neutral: rating.neutral + 1
+    }
+    setRating(newRating)
+    console.log(rating.good)
     setTotal(good + updatedNeutral + bad)
   }
 
   const handleBad = () => {
-    const updatedBad = bad + 1
-    setBad(bad + 1)
+    const newRating = {
+      ...rating,
+      bad: rating.bad + 1
+    }
+    setRating(newRating)
     setTotal(good + neutral + updatedBad)
   }
 
@@ -43,9 +60,9 @@ const App = () => {
       </div>
       <div>
         <h1>statistics</h1>
-        <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
+        <p>good {rating.good}</p>
+        <p>neutral {rating.neutral}</p>
+        <p>bad {rating.bad}</p>
         <p>all {total}</p>
         <p>average {(good + (bad * -1))/total}</p>
         <p>positive {(good/total)*100}%</p>
