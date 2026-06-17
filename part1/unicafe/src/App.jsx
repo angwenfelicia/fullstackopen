@@ -1,5 +1,5 @@
 // to-do
-// unicafe step 5 refactor
+// unicafe step 6 add table
 
 import { useState } from 'react'
 
@@ -7,8 +7,12 @@ import { useState } from 'react'
 const Button = ({ onClick, text }) => 
   <button onClick={onClick}>{text}</button>
 
-const StatisticLine = (props) => {
-  
+const StatisticLine = ({ text, value }) => {
+  return (
+    <>
+      <p>{text} {value}</p>
+    </>
+  )
 }
 
 const Statistics = (props) => {
@@ -22,21 +26,18 @@ const Statistics = (props) => {
   
   return (
     <>
-      <p>good {props.good}</p>
-      <p>neutral {props.neutral}</p>
-      <p>bad {props.bad}</p>
-      <p>all {props.total}</p>
-      <p>average {(props.good + (props.bad * - 1))/props.total}</p>
-      <p>positive {(props.good/props.total)*100}%</p>
+      <StatisticLine text = 'good' value = {props.good} />
+      <StatisticLine text = 'neutral' value = {props.neutral} />
+      <StatisticLine text = 'bad' value = {props.bad} />
+      <StatisticLine text = 'total' value = {props.total} />
+      <StatisticLine text = 'average' value = {props.average} />
+      <StatisticLine text = 'positive' value = {props.positive} />
     </>
   )
 }
 
 const App = () => {
   // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
   const [rating, setRating] = useState({
     good: 0,
     neutral: 0,
@@ -44,7 +45,6 @@ const App = () => {
   })
   // count total clicks
   const [total, setTotal] = useState(0)
-  const [average, setAverage] = useState(0)
 
   // refactor using object spread
   const handleGood = () => {
@@ -77,6 +77,14 @@ const App = () => {
     setTotal(rating.good + rating.neutral + updatedBad)
   }
 
+  const average = (good, bad, total) => {
+    return (good + (bad * - 1))/total
+  }
+
+  const positivePercent = (good, total) => {
+    return (good/total)*100 + '%'
+  }
+
 
   return (
     <>
@@ -88,8 +96,27 @@ const App = () => {
       </div>
       <div>
         <h1>statistics</h1>
-        <Statistics good={rating.good} neutral={rating.neutral} bad={rating.bad} total={total} />
+        <Statistics
+          good={rating.good}
+          neutral={rating.neutral}
+          bad={rating.bad}
+          total={total}
+          average={average(rating.good, rating.bad, total)}
+          positive={positivePercent(rating.good, total)} />
       </div>
+      <table>
+        <caption>statistics</caption>
+        <thead>
+          <tr>
+            <td>good</td>
+            <td>number here</td>
+          </tr>
+          <tr>
+            <td> bad</td>
+            <td> number here</td>
+          </tr>
+        </thead>
+      </table>
     </>
   )
 }
