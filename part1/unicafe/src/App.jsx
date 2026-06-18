@@ -1,6 +1,3 @@
-// to-do
-// unicafe step 6 add table
-
 import { useState } from 'react'
 
 //create button component
@@ -9,18 +6,19 @@ const Button = ({ onClick, text }) =>
 
 const StatisticLine = ({ text, value }) => {
   return (
-    <>
-      <p>{text} {value}</p>
-    </>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
   )
 }
 
 const Statistics = (props) => {
   if (props.total === 0) {
     return (
-      <>
-        <p>No feedback given</p>
-      </>
+      <tr>
+        <td>No feedback given</td>
+      </tr>
     )
   }
   
@@ -85,7 +83,6 @@ const App = () => {
     return (good/total)*100 + '%'
   }
 
-
   return (
     <>
       <div>
@@ -94,8 +91,9 @@ const App = () => {
         <Button onClick={handleNeutral} text='neutral' />
         <Button onClick={handleBad} text='bad' />
       </div>
-      <div>
-        <h1>statistics</h1>
+      <table>
+        <caption>statistics</caption>
+        <thead>
         <Statistics
           good={rating.good}
           neutral={rating.neutral}
@@ -103,18 +101,6 @@ const App = () => {
           total={total}
           average={average(rating.good, rating.bad, total)}
           positive={positivePercent(rating.good, total)} />
-      </div>
-      <table>
-        <caption>statistics</caption>
-        <thead>
-          <tr>
-            <td>good</td>
-            <td>number here</td>
-          </tr>
-          <tr>
-            <td> bad</td>
-            <td> number here</td>
-          </tr>
         </thead>
       </table>
     </>
