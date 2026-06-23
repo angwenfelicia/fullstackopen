@@ -30,7 +30,7 @@ const App = () => {
   }
 
   const count = () => {
-    const copy = [...selected]
+    const copy = {...selected}
     console.log(selected)
     setVoted(copy[selected] += 1)
     console.log(copy)
