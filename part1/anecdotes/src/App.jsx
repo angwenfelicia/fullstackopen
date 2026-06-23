@@ -1,8 +1,8 @@
+//anecdotes step 2
+
 import { useState } from 'react'
 
-const Button = ({ onClick, text }) => {
-  <button onClick={onClick}>{text}</button>
-}
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 
 const App = () => {
   const anecdotes = [
@@ -17,19 +17,31 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [voted, setVoted] = useState(0)
 
-  const randomise = (min, max) => {
+
+  //randomise the output based on the length of the anecdotes, store in selected
+  const randomise = () => {
+    const min = 0
+    let max = anecdotes.length - 1
     const minCeiled = Math.ceil(min)
     const maxFloored = Math.floor(max)
-    console.log(anecdotes.length - 1)
-    return setSelected(Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled))
+    setSelected(Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled))
+  }
+
+  const count = () => {
+    const copy = [...selected]
+    console.log(selected)
+    setVoted(copy[selected] += 1)
+    console.log(copy)
   }
 
   return (
     <div>
-      {anecdotes[selected]}
-      {selected}
-      {/*<Button onClick={handleIt} text='next anecdote' />*/}
+      <p>{anecdotes[selected]}</p>
+      <p>has num votes</p>
+      <Button onClick={count} text='vote' />
+      <Button onClick={randomise} text='next anecdote' />
     </div>
   )
 }
