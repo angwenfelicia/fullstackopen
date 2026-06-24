@@ -1,5 +1,3 @@
-//anecdotes step 3
-
 import { useState } from 'react'
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
@@ -17,11 +15,8 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
-  const [voted, setVoted] = useState(
-    { 0 : 0, 1 : 0, 2 : 0, 3 : 0, 4 : 0, 5 : 0, 6 : 0, 7 : 0 }
-  )
+  const [voted, setVoted] = useState( Array(anecdotes.length).fill(0) )
   const [mostvoted, setMostVoted] = useState(0)
-
 
   //randomise the output based on the length of the anecdotes, store in selected
   const handleRandomNum = () => {
@@ -33,17 +28,12 @@ const App = () => {
   }
 
   const handleCount = () => {
-    const copy = {...voted}
+    const copy = [...voted]
     copy[selected] += 1
     setVoted(copy)
-    console.log("this is voted: " + voted[selected])
-
-    console.log(mostvoted)
-  }
-
-  const mostVoted = () => {
-    const calculateMost = Math.max(...voted)
-    setMostVoted(calculateMost.indexOf(...voted))
+    
+    const calculateMost = Math.max(...copy)
+    setMostVoted(copy.indexOf(calculateMost))
   }
 
   return (
@@ -58,7 +48,7 @@ const App = () => {
     <div>
       <h1>Anecdote with most votes</h1>
       <p>{anecdotes[mostvoted]}</p>
-      <p>has {mostvoted} votes</p>
+      <p>has {voted[mostvoted]} votes</p>
     </div>
     </>
   )
