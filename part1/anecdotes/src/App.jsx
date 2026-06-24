@@ -1,4 +1,4 @@
-//anecdotes step 2
+//anecdotes step 3
 
 import { useState } from 'react'
 
@@ -17,11 +17,14 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
-  const [voted, setVoted] = useState(0)
+  const [voted, setVoted] = useState(
+    { 0 : 0, 1 : 0, 2 : 0, 3 : 0, 4 : 0, 5 : 0, 6 : 0, 7 : 0 }
+  )
+  const [mostvoted, setMostVoted] = useState(0)
 
 
   //randomise the output based on the length of the anecdotes, store in selected
-  const randomise = () => {
+  const handleRandomNum = () => {
     const min = 0
     let max = anecdotes.length - 1
     const minCeiled = Math.ceil(min)
@@ -29,20 +32,35 @@ const App = () => {
     setSelected(Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled))
   }
 
-  const count = () => {
-    const copy = {...selected}
-    console.log(selected)
-    setVoted(copy[selected] += 1)
-    console.log(copy)
+  const handleCount = () => {
+    const copy = {...voted}
+    copy[selected] += 1
+    setVoted(copy)
+    console.log("this is voted: " + voted[selected])
+
+    console.log(mostvoted)
+  }
+
+  const mostVoted = () => {
+    const calculateMost = Math.max(...voted)
+    setMostVoted(calculateMost.indexOf(...voted))
   }
 
   return (
+    <>
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
-      <p>has num votes</p>
-      <Button onClick={count} text='vote' />
-      <Button onClick={randomise} text='next anecdote' />
+      <p>has {voted[selected]} votes</p>
+      <Button onClick={handleCount} text='vote' />
+      <Button onClick={handleRandomNum} text='next anecdote' />
     </div>
+    <div>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[mostvoted]}</p>
+      <p>has {mostvoted} votes</p>
+    </div>
+    </>
   )
 }
 
