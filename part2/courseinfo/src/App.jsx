@@ -1,29 +1,44 @@
-//exercise 2.1
+//exercise 2.2 in progress
+//to-do:  move the Total component inside Content
+//
 const Header = (props) => <h1>{props.course.name}</h1>
 
-const Content = (props) => (
-  <div>
-    <Part part={props.course.parts[0]} />
-    <Part part={props.course.parts[1]} />
-    <Part part={props.course.parts[2]} />
-  </div>
-)
+//map the parts
+const Content = (props) => {
+  const mapParts = props.course.parts.map( x =>
+    <li>
+      <Part key={x.id} part={x} />
+    </li>
+  )
+  
+  return <div>{mapParts}</div>
+}
 
+//each lists contains name and number of exercises
 const Part = (props) => (
-  <p>
+  <ul> 
     {props.part.name} {props.part.exercises}
-  </p>
+  </ul>
 )
 
-//const Total = (props) => <p>Number of exercises {props.total}</p>
+//calculate sum using reduce
+//to-do: try implementing useState in initialValue
+//use map again then reduce
+const Total = (props) => {
+  const initialValue = 0
+  /*const sumInitial = props.parts.reduce(
+    (accumulator, currentValue) => accumulator, currentValue, initialValue
+  )*/
+
+}
 
 const Course = (props) => {
-  console.log(props)  
-const { course } = props
+  const { course } = props
   return (
     <div>
       <Header course={course} />
       <Content course={course} />
+      <Total course={course} />
     </div>
   )
 }
@@ -47,6 +62,11 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
