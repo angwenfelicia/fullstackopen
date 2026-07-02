@@ -1,6 +1,4 @@
 //exercise 2.2 in progress
-//to-do:  move the Total component inside Content
-//
 const Header = (props) => <h1>{props.course.name}</h1>
 
 //map the parts
@@ -11,7 +9,20 @@ const Content = (props) => {
     </li>
   )
   
-  return <div>{mapParts}</div>
+  return (
+    <div>
+      {mapParts}
+      <b>total of  exercises</b>
+    </div>
+  )
+}
+
+const Total = (props) => {
+  const total = props.course.parts.reduce((s, p) => {
+    s + p.exercises, 0
+  })
+  console.log(total)
+  return total
 }
 
 //each lists contains name and number of exercises
@@ -21,24 +32,12 @@ const Part = (props) => (
   </ul>
 )
 
-//calculate sum using reduce
-//to-do: try implementing useState in initialValue
-//use map again then reduce
-const Total = (props) => {
-  const initialValue = 0
-  /*const sumInitial = props.parts.reduce(
-    (accumulator, currentValue) => accumulator, currentValue, initialValue
-  )*/
-
-}
-
 const Course = (props) => {
   const { course } = props
   return (
     <div>
       <Header course={course} />
       <Content course={course} />
-      <Total course={course} />
     </div>
   )
 }
