@@ -1,15 +1,13 @@
 //exercise part 2.4 in progress
-//const Header = (props) => <h2>{props.courses.name}</h2>
 
 const Header = (props) => {
-  const headerName = props.courses.map( x => 
-    x.name
+  const headerName = props.courses.map( x =>
+    <h2 key={x.id}>
+      {x.name}
+    </h2>
   )
 
-  console.log(headerName)
-  return (
-      <h2>{headerName}</h2>
-  )
+  return headerName
 }
 
 
@@ -17,14 +15,13 @@ const Header = (props) => {
 const Content = (props) => {
   console.log(props)
 
-  const mapParts = props.courses.parts.map( x =>
-    <li key={x.id}>
-      <Part part={x} />
-    </li>
+  const mapParts = props.courses.map( x =>
+    <li>{x.name}</li>
   )
 
   // reduce using accumulator and currentValue of exercises
-  const total = props.courses.parts.reduce((a, v) => 
+  // props.course.parts.reduce
+  const total = props.courses.reduce((a, v) => 
     a + v.exercises, 0
   )
   
@@ -49,7 +46,7 @@ const Course = (props) => {
     <div>
       <h1>Web development curriculum</h1>
       <Header courses={courses} />
-      <p>next item</p>
+      {/*<Content courses={courses} />*/}
     </div>
   )
 }
