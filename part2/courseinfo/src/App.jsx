@@ -1,10 +1,23 @@
-//exercise part 2.4 in progress
+//exercise part 2.4 in progress:
+//reduce, total still NaN
 
 const Header = (props) => {
+  const total = props.courses.reduce((a, v) => 
+    a + v.exercises, 0
+  )
+
   const headerName = props.courses.map( x =>
-    <h2 key={x.id}>
-      {x.name}
-    </h2>
+    <div key={x.id}>
+      <h2>{x.name}</h2>
+      <ul>
+        {x.parts.map(part => 
+          <li key={part.id}>
+            {part.name} {part.exercises}
+          </li>
+        )}
+      </ul>
+      <b>total of {total} exercises</b>
+    </div>
   )
 
   return headerName
