@@ -1,47 +1,48 @@
 //exercise part 2.4 in progress:
-//reduce, total still NaN
+//almost done, clean code later
 
 const Header = (props) => {
-  const total = props.courses.reduce((a, v) => 
-    a + v.exercises, 0
-  )
+  //const total = props.courses.reduce((a, v) => 
+  //  a + v.exercises, 0
+  //)
+
+  
 
   const headerName = props.courses.map( x =>
-    <div key={x.id}>
+    {
+      let total = 0
+      return <div key={x.id}>
       <h2>{x.name}</h2>
       <ul>
-        {x.parts.map(part => 
-          <li key={part.id}>
+        {x.parts.map(part =>
+          {
+          total = (x.parts.reduce((a, v) => a + v.exercises, 0 ))
+          return <li key={part.id}>
             {part.name} {part.exercises}
           </li>
+          }
         )}
       </ul>
       <b>total of {total} exercises</b>
     </div>
+    }
   )
 
   return headerName
 }
 
 
+
 //map the parts
 const Content = (props) => {
+
   console.log(props)
-
-  const mapParts = props.courses.map( x =>
-    <li>{x.name}</li>
-  )
-
   // reduce using accumulator and currentValue of exercises
   // props.course.parts.reduce
-  const total = props.courses.reduce((a, v) => 
-    a + v.exercises, 0
-  )
   
   return (
     <div>
-      {mapParts}
-      <b>total of {total} exercises </b>
+      <b>total of x exercises </b>
     </div>
   )
 }
@@ -59,7 +60,7 @@ const Course = (props) => {
     <div>
       <h1>Web development curriculum</h1>
       <Header courses={courses} />
-      {/*<Content courses={courses} />*/}
+      <Content courses={courses} />
     </div>
   )
 }
