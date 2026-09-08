@@ -1,65 +1,35 @@
-//exercise part 2.4 in progress:
-//almost done, clean code later
+//exercise part 2.5 in progress
 
-const Header = (props) => {
-  //const total = props.courses.reduce((a, v) => 
-  //  a + v.exercises, 0
-  //)
-
-  
-
-  const headerName = props.courses.map( x =>
-    {
-      let total = 0
-      return <div key={x.id}>
-      <h2>{x.name}</h2>
-      <ul>
-        {x.parts.map(part =>
-          {
-          total = (x.parts.reduce((a, v) => a + v.exercises, 0 ))
-          return <li key={part.id}>
-            {part.name} {part.exercises}
-          </li>
-          }
-        )}
-      </ul>
-      <b>total of {total} exercises</b>
-    </div>
-    }
-  )
-
-  return headerName
-}
-
-
-
-//map the parts
 const Content = (props) => {
 
-  console.log(props)
-  // reduce using accumulator and currentValue of exercises
-  // props.course.parts.reduce
+  const total = props.courses.reduce(
+    (sum, x) => x.parts.reduce((a, v) => a + v.exercises, 0)
+  )
   
   return (
-    <div>
-      <b>total of x exercises </b>
-    </div>
+    <>
+      {props.courses.map(course => (
+        <div key={course.id} >
+          <h2>{course.name}</h2>
+        <ul>
+          {course.parts.map(part => (
+            <li key={part.id}>
+              {part.name} {part.exercises}
+            </li>
+          ))}
+        </ul>
+        </div>  
+      ))}
+      <b>total of {total} exercises </b>
+    </>
   )
 }
-
-//each lists contains name and number of exercises
-const Part = (props) => (
-  <ul> 
-    {props.part.name} {props.part.exercises}
-  </ul>
-)
 
 const Course = (props) => {
   const { courses } = props
   return (
     <div>
       <h1>Web development curriculum</h1>
-      <Header courses={courses} />
       <Content courses={courses} />
     </div>
   )
