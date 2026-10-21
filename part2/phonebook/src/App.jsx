@@ -1,4 +1,5 @@
 // exercise 2.6 in progress
+// show initial list, input name, add to existing list
 
 import { useState } from 'react'
 
@@ -10,22 +11,12 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
-    const noteObject = {
-      content: newName,
-      id: String(names.length + 1),
-    }
-
-    setNames(names.concat(noteObject))
-    setNewame('')
+    
   }
 
-  const handleNameChange = (event) => {
+  const handleChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
-  }
-
-  const Name = ({ name }) => {
-    return <li>{name.content}</li>
   }
 
   return (
@@ -33,19 +24,24 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={addName}>
         <div>
-          name: <input value={newName} 
-            onChange={handleNameChange} />
+          name: <input value={newName}
+                       onChange={handleChange}/>
         </div>
         <div>debug: {newName}</div>
         <div>
-          <button type="submit" onClick={() => addToList(true)}>add</button>
+          <button type="submit" onClick={() => {
+            setPersons([
+              ...persons,
+              { id: String(persons.length + 1), name: newName}
+            ])
+          } } >add</button>
         </div>
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map( name => (
-          <Name key={name.id} name={name} />
-        ))}
+          {persons.map(person => (
+            <li key={person.id}>{person.name}</li>
+          ))}
       </ul>
     </div>
   )
